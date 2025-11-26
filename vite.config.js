@@ -13,8 +13,12 @@ export default defineConfig({
       // 将 /api 开头的请求转发到后端服务器
       '/api': {
         target: 'http://localhost:3126',
-        changeOrigin: true
+        changeOrigin: true,
+      },
+      '/ws': {
+        target: 'ws://localhost:3126',
+        ws: true
       }
-    }
   }
+}
 })

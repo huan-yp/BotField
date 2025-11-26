@@ -31,7 +31,8 @@ const app = express();
 const server = http.createServer(app);
 
 // 创建 WebSocket 服务器
-const wss = new WebSocket.Server({ server });
+// 在 /ws 路径上监听 WebSocket 连接
+const wss = new WebSocket.Server({ server, path: '/ws' });
 
 // 存储连接的客户端
 const clients = {

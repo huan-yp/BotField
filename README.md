@@ -13,10 +13,11 @@
 
 [你车校内快速使用](./docs/SEU.md)
 
-### 1. 安装依赖
+### 1. 下载本项目并安装依赖
 
 ```powershell
-npm install
+git clone https://github.com/huan-yp/botfield.git
+cd botfield && npm install
 ```
 
 ### 2. 编译 C++ 游戏引擎
@@ -49,13 +50,12 @@ default_bot: demo    # 默认 Bot（不要写后缀名）
 ### 4. 启动服务器
 
 ```powershell
-# 方式 A: 一键启动 (推荐)
+# 方式 A: Windows 一键启动 (推荐)
 ./start.ps1
-npm run dev:bridge
 
 # 方式 B: 分别启动
-npm run dev:backend  # 终端 1: 后端服务
-npm run dev:fe       # 终端 2: 前端界面
+npm run dev:backend & # 终端 1: 后端服务
+npm run dev:fe &       # 终端 2: 前端界面
 ```
 
 ### 5. 启动客户端

@@ -26,8 +26,27 @@ public:
 
         std::string line;
         while (std::getline(file, line)) {
-            // 跳过空行和注释
+            // 移除行首/尾空白
             line = trim(line);
+            if (line.empty()) continue;
+
+            // 移除行内注释（忽略引号内的 #）
+            bool inSingleQuote = false;
+            bool inDoubleQuote = false;
+            for (size_t i = 0; i < line.size(); ++i) {
+                char c = line[i];
+                if (c == '"' && !inSingleQuote) {
+                    inDoubleQuote = !inDoubleQuote;
+                } else if (c == '\'' && !inDoubleQuote) {
+                    inSingleQuote = !inSingleQuote;
+                } else if (c == '#' && !inSingleQuote && !inDoubleQuote) {
+                    // 剪掉注释起始位置及其后的内容
+                    line = trim(line.substr(0, i));
+                    break;
+                }
+            }
+
+            // 跳过空行或以 # 开头的整行注释
             if (line.empty() || line[0] == '#') continue;
 
             // 解析 key: value

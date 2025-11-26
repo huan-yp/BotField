@@ -22,9 +22,16 @@ cd botfield && npm install
 
 ### 2. 编译 C++ 游戏引擎
 
+#### 2.1 make 编译
+
 ```powershell
-cd client
-make
+cd client && make && cd ..
+```
+
+#### 2.2 gcc 编译
+
+```powershell
+g++ -o ./backend/build/main -O2 -std=c++17 -fopenmp ./backend/src/battlefield.cpp ./backend/src/third_party/jsoncpp/jsoncpp.cpp -Ibackend/src/third_party
 ```
 
 ### 3. 填写配置
@@ -53,7 +60,7 @@ default_bot: demo    # 默认 Bot（不要写后缀名）
 # 方式 A: Windows 一键启动 (推荐)
 ./start.ps1
 
-# 方式 B: 分别启动
+# 方式 B: 分别启动 (Linux)
 npm run dev:backend & # 终端 1: 后端服务
 npm run dev:fe &       # 终端 2: 前端界面
 ```

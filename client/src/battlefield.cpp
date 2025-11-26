@@ -18,6 +18,9 @@
 #include <filesystem>
 #include "jsoncpp/json.h"
 #include "yaml_parser.h"
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 using namespace std;
 namespace fs = std::filesystem;
@@ -216,6 +219,9 @@ void print_rank(int game_num)
 
 int main()
 {
+	#ifdef _WIN32
+    SetConsoleOutputCP(65001); 
+    #endif
     // 加载配置
     if (!load_config()) {
         cerr << "Failed to load configuration" << endl;

@@ -119,7 +119,7 @@ const connectWebSocket = () => {
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
   const host = window.location.hostname;
   const port = '3126'; // 后端服务器端口
-  const wsUrl = `${protocol}//${host}/ws`;
+  const wsUrl = `${protocol}//${host}:${port}/ws`;
 
   console.log(`正在尝试连接到后端: ${wsUrl}`);
   ws = new WebSocket(wsUrl);

@@ -11,47 +11,22 @@
 
 ## 快速开始
 
+[你车校内快速使用](./docs/SEU.md)
+
 ### 1. 安装依赖
+
 ```powershell
 npm install
 ```
 
 ### 2. 编译 C++ 游戏引擎
+
 ```powershell
 cd client
 make
 ```
 
-### 3. 启动系统
-```powershell
-# 方式 A: 一键启动 (推荐)
-./start.ps1
-npm run dev:bridge
-
-# 方式 B: 分别启动
-npm run dev:backend  # 终端 1: 后端服务
-npm run dev:fe       # 终端 2: 前端界面
-npm run dev:bridge   # 终端 3: C++ 桥接
-```
-
-### 4. 访问应用
-浏览器打开: **http://localhost:5173**
-
-## 项目结构
-
-```
-botfield/
-├── frontend/          # Vue 前端界面
-├── backend/           # Node.js WebSocket 服务器
-├── client/            # C++ 游戏引擎 + Bridge 客户端
-├── bots/              # Bot 可执行文件目录
-├── config.yaml        # 游戏配置
-└── docs/              # 文档
-    ├── START_GUIDE.md      # 详细使用指南
-    └── ARCHITECTURE.md     # 技术架构文档
-```
-
-## 游戏配置
+### 3. 填写配置
 
 编辑 `config.yaml` 自定义对战参数:
 
@@ -67,10 +42,49 @@ default_bot: demo    # 默认 Bot（不要写后缀名）
 ```
 
 **Bot 加载规则:**
-- 自动扫描 `bot_dir` 目录下的 `.exe` 文件
+- 自动扫描 `bot_dir` 目录下的 `.exe` 文件（忽视 default_bot）
 - Bot 不足时用 `default_bot` 补全
 - 未找到任何 Bot 时全部使用 `default_bot`
 
+### 4. 启动服务器
+
+```powershell
+# 方式 A: 一键启动 (推荐)
+./start.ps1
+npm run dev:bridge
+
+# 方式 B: 分别启动
+npm run dev:backend  # 终端 1: 后端服务
+npm run dev:fe       # 终端 2: 前端界面
+```
+
+### 5. 启动客户端
+
+游戏客户端可以和服务器放在一台机器上，也可以在不同机器上。
+
+如果在不同机器上，需要正确填写 `config.yaml` 里的 `backend_url`。
+
+```powershell
+npm run dev:bridge
+```
+
+### 6. 访问结果
+
+浏览器打开: **http://localhost:5173**
+
+## 项目结构
+
+```
+botfield/
+├── frontend/          # Vue 前端界面
+├── backend/           # Node.js WebSocket 服务器
+├── client/            # C++ 游戏引擎 + Bridge 客户端
+├── bots/              # Bot 可执行文件目录
+├── config.yaml        # 游戏配置
+└── docs/              # 文档
+    ├── START_GUIDE.md      # 详细使用指南
+    └── ARCHITECTURE.md     # 技术架构文档
+```
 ## 开发命令
 
 ```powershell

@@ -1,7 +1,8 @@
-backend_listen: 0.0.0.0:3126
-# backend_url: ws://botzone.m5d431.cn?type=cpp
-backend_url: ws://localhost:3126?type=cpp
-total_games: 20
-player_number: 12
-bot_dir: bots
-default_bot: demo 
+backend_listen: localhost:3126  # 后端监听地址和端口 (只配置 Client 不需要管这个)
+# backend_listen: 0.0.0.0:3126 # 允许外网连接
+backend_url: ws://localhost:3126?type=cpp # client 连接地址（写后端的 ip 和端口）
+# backend_url: ws://botzone.m5d431.cn?type=cpp # SEU 校内的服务器
+total_games: 20           # 对局总数
+player_number: 12         # 玩家数量
+bot_dir: bots            # Bot 目录
+default_bot: demo    # 默认 Bot（不要写后缀名）

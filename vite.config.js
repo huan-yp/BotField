@@ -8,6 +8,7 @@ export default defineConfig({
   base: './',
   server: {
     host: '0.0.0.0',
+    allowedHosts: [],
     port: 5173,
     proxy: {
       // 将 /api 开头的请求转发到后端服务器
@@ -16,7 +17,8 @@ export default defineConfig({
         changeOrigin: true,
       },
       '/ws': {
-        target: 'ws://localhost:3126/ws',
+        target: 'ws://localhost:3126',
+        changeOrigin: true,
         ws: true
       }
   }

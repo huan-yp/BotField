@@ -176,8 +176,8 @@ server.listen(portNumber, HOST, () => {
   console.log('═══════════════════════════════════════');
   console.log('');
   console.log('连接说明:');
-  console.log(`  - C++ 客户端: ws://${HOST}:${portNumber}?type=cpp`);
-  console.log(`  - 前端客户端: ws://${HOST}:${portNumber}`);
+  console.log(`  - C++ 客户端: ws://${HOST}:${portNumber}/ws?type=cpp`);
+  console.log(`  - 前端客户端: ws://${HOST}:${portNumber}/`);
   console.log('');
   console.log('API 端点:');
   console.log(`  - GET /api/health - 服务健康检查`);

@@ -27,7 +27,7 @@ npm install
 
 ```yaml
 backend_listen: localhost:3126  # 后端监听地址和端口 (只配置 Client 不需要管这个)
-backend_url: ws://botzone.m5d431.cn?type=cpp # SEU 校内的服务器
+backend_url: wss://botzone.m5d431.cn/ws?type=cpp # SEU 校内的服务器
 total_games: 20           # 对局总数
 player_number: 12         # 玩家数量
 bot_dir: bots            # Bot 目录

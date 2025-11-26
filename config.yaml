@@ -1,4 +1,7 @@
+backend_listen: 0.0.0.0:3126
+# backend_url: ws://botzone.m5d431.cn?type=cpp
+backend_url: ws://localhost:3126?type=cpp
 total_games: 20
 player_number: 12
 bot_dir: bots
-default_bot: demo
+default_bot: demo 

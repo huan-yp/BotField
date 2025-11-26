@@ -144,17 +144,22 @@ bool load_config() {
     }
 
     // 填充 bots 数组，使用完整路径
+	string default_bot_path = BOT_DIR + "/" + DEFAULT_BOT;
     bots.clear();
     for (size_t i = 0; i < bot_files.size() && bots.size() < (size_t)PLAYER_NUMBER; i++) {
         string bot_name = bot_files[i];
         string player_name = bot_name.substr(0, bot_name.find_last_of('.'));
         string full_path = BOT_DIR + "/" + bot_name;
+		string path_without_suffix = full_path.substr(0, full_path.find_last_of('.'));
+		// cout<<"Debug: "<<path_without_suffix<<' '<<default_bot_path<<"\n";
+		if(path_without_suffix == default_bot_path) continue;
         bots.push_back({full_path, player_name});
     }
-
+	
     // 如果不足 PLAYER_NUMBER 个，用 DEFAULT_BOT 补全
     int current_count = bots.size();
-    string default_bot_path = BOT_DIR + "/" + DEFAULT_BOT;
+	// cout<<"Size:"<<current_count<<'\n';
+
     for (int i = current_count; i < PLAYER_NUMBER; i++) {
         bots.push_back({default_bot_path, "Default" + to_string(i - current_count + 1)});
     }

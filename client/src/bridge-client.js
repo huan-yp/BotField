@@ -7,11 +7,26 @@ const { spawn } = require('child_process');
 const WebSocket = require('ws');
 const path = require('path');
 const fs = require('fs');
+const yaml = require('js-yaml');
 
 // 配置
 const EXE_PATH = './client/build/main.exe'; // Windows
 // const EXE_PATH = './client/build/main'; // Mac/Linux
-const BACKEND_WS_URL = 'ws://localhost:3126?type=cpp';
+const DEFAULT_WS_URL = 'ws://localhost:3126?type=cpp';
+
+// 读取配置文件
+const configPath = path.join(__dirname, '../../config.yaml');
+let config;
+try {
+  const configFile = fs.readFileSync(configPath, 'utf8');
+  config = yaml.load(configFile);
+} catch (e) {
+  console.error('❌ 无法读取配置文件:', e.message);
+  process.exit(1);
+}
+
+
+const BACKEND_WS_URL = config.backend_url || DEFAULT_WS_URL;
 
 let ws = null;
 let reconnectTimer = null;

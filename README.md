@@ -1,34 +1,102 @@
-# Battlefield - 斗地主对战平台
+# Botfield - 斗地主 Bot 对战平台
 
-## 配置文件
+基于 WebSocket 的实时斗地主 Bot 对战平台,支持多 Bot 竞技、实时排行榜展示。
 
-项目使用 `config.yaml` 进行配置：
+## 技术栈
 
-```yaml
-total_games: 20           # 对局总数
-player_number: 12         # 玩家数量
-bot_dir: bots            # bot 存放目录
-default_bot: demo.exe # 默认 bot（用于补全不足的玩家）
+- **前端**: Vue 3 + Vite + Tailwind CSS
+- **后端**: Node.js + Express + WebSocket
+- **游戏引擎**: C++ (OpenMP 并行)
+- **通信协议**: WebSocket + JSON
+
+## 快速开始
+
+### 1. 安装依赖
+```powershell
+npm install
 ```
 
-### Bot 加载规则
-
-1. 程序会自动扫描 `bot_dir` 目录下的所有 `.exe` 文件
-2. 如果找到的 bot 数量少于 `player_number`，会用 `default_bot` 补全
-3. 如果 `bot_dir` 中没有找到任何 bot，所有玩家都使用 `default_bot`
-
-## 编译后端
-
-### 使用 make（推荐）
-
-```bash
-cd backend
+### 2. 编译 C++ 游戏引擎
+```powershell
+cd client
 make
 ```
 
-### 使用 G++ 直接编译
+### 3. 启动系统
+```powershell
+# 方式 A: 一键启动 (推荐)
+./start.ps1
+npm run dev:bridge
 
-```bash
-g++ -o ./backend/build/main -O2 -std=c++17 -fopenmp ./backend/src/battlefield.cpp ./backend/src/third_party/jsoncpp/jsoncpp.cpp -Ibackend/src/third_party
+# 方式 B: 分别启动
+npm run dev:backend  # 终端 1: 后端服务
+npm run dev:fe       # 终端 2: 前端界面
+npm run dev:bridge   # 终端 3: C++ 桥接
 ```
+
+### 4. 访问应用
+浏览器打开: **http://localhost:5173**
+
+## 项目结构
+
+```
+botfield/
+├── frontend/          # Vue 前端界面
+├── backend/           # Node.js WebSocket 服务器
+├── client/            # C++ 游戏引擎 + Bridge 客户端
+├── bots/              # Bot 可执行文件目录
+├── config.yaml        # 游戏配置
+└── docs/              # 文档
+    ├── START_GUIDE.md      # 详细使用指南
+    └── ARCHITECTURE.md     # 技术架构文档
+```
+
+## 游戏配置
+
+编辑 `config.yaml` 自定义对战参数:
+
+```yaml
+backend_listen: localhost:3126      # 后端监听地址和端口
+# backend_listen: 0.0.0.0:3126 # 允许外网连接
+backend_url: ws://localhost:3126?type=cpp # client 连接地址（写后端的 ip 和端口）
+# backend_url: ws://botzone.m5d431.cn?type=cpp # SEU 校内的服务器
+total_games: 20           # 对局总数
+player_number: 12         # 玩家数量
+bot_dir: bots            # Bot 目录
+default_bot: demo    # 默认 Bot（不要写后缀名）
+```
+
+**Bot 加载规则:**
+- 自动扫描 `bot_dir` 目录下的 `.exe` 文件
+- Bot 不足时用 `default_bot` 补全
+- 未找到任何 Bot 时全部使用 `default_bot`
+
+## 开发命令
+
+```powershell
+# 前端开发
+npm run dev:fe          # 启动开发服务器
+npm run build:fe        # 构建生产版本
+
+# 后端服务
+npm run dev:backend     # 启动 WebSocket 服务器
+
+# C++ Bridge
+npm run dev:bridge      # 启动桥接客户端
+```
+
+## 文档
+
+- 🏗️ [架构文档](docs/ARCHITECTURE.md) - 技术架构和数据流说明
+- 🚀 [服务器部署](docs/SERVER_SIDE.md) - 公网内容服务器部署
+- 🖥️ [客户端部署](docs/CLIENT_SIDE.md) - 内网机器游戏引擎部署指南
+
+## API 端点
+
+- **健康检查**: `GET http://localhost:3126/api/health`
+- **连接状态**: `GET http://localhost:3126/api/status`
+
+## License
+
+MIT
 

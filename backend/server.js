@@ -6,9 +6,26 @@
 const WebSocket = require('ws');
 const http = require('http');
 const express = require('express');
+const fs = require('fs');
+const yaml = require('js-yaml');
+const path = require('path');
+
+// 读取配置文件
+const configPath = path.join(__dirname, '../config.yaml');
+let config;
+try {
+  const configFile = fs.readFileSync(configPath, 'utf8');
+  config = yaml.load(configFile);
+} catch (e) {
+  console.error('❌ 无法读取配置文件:', e.message);
+  process.exit(1);
+}
+
+// 解析 backend_listen 配置 (格式: host:port)
+const [HOST, PORT] = (config.backend_listen || 'localhost:3126').split(':');
+const portNumber = parseInt(PORT, 10);
 
 const app = express();
-const PORT = 3126;
 
 // 创建 HTTP 服务器
 const server = http.createServer(app);
@@ -150,16 +167,16 @@ function broadcastToFrontends(data) {
 }
 
 // 启动服务器
-server.listen(PORT, () => {
+server.listen(portNumber, HOST, () => {
   console.log('═══════════════════════════════════════');
   console.log(`🚀 后端服务器已启动`);
-  console.log(`📡 HTTP API: http://localhost:${PORT}`);
-  console.log(`🔌 WebSocket: ws://localhost:${PORT}`);
+  console.log(`📡 HTTP API: http://${HOST}:${portNumber}`);
+  console.log(`🔌 WebSocket: ws://${HOST}:${portNumber}`);
   console.log('═══════════════════════════════════════');
   console.log('');
   console.log('连接说明:');
-  console.log(`  - C++ 客户端: ws://localhost:${PORT}?type=cpp`);
-  console.log(`  - 前端客户端: ws://localhost:${PORT}`);
+  console.log(`  - C++ 客户端: ws://${HOST}:${portNumber}?type=cpp`);
+  console.log(`  - 前端客户端: ws://${HOST}:${portNumber}`);
   console.log('');
   console.log('API 端点:');
   console.log(`  - GET /api/health - 服务健康检查`);

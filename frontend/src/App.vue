@@ -115,12 +115,10 @@ const connectWebSocket = () => {
     ws.close();
   }
 
-  // ★★★ 核心修复：自动获取当前网页的 Host IP ★★★
-  // 如果你在浏览器访问 http://192.168.1.5:5173，这里就会自动变成 ws://192.168.1.5:8080
-  // 而不是死板的 ws://localhost:8080
+  // 连接到后端 WebSocket 服务器
   const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const host = window.location.hostname; // 自动获取当前域名或IP
-  const port = '3000'; // 后端 bridge_server 的端口
+  const host = window.location.hostname;
+  const port = '3126'; // 后端服务器端口
   const wsUrl = `${protocol}//${host}:${port}`;
 
   console.log(`正在尝试连接到后端: ${wsUrl}`);

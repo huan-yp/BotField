@@ -5,5 +5,14 @@ import { resolve } from 'path'
 export default defineConfig({
   plugins: [vue()],
   root: resolve('frontend'),   // ← 关键
-  base: './'
+  base: './',
+  server: {
+    proxy: {
+      // 将 /api 开头的请求转发到后端服务器
+      '/api': {
+        target: 'http://localhost:3126',
+        changeOrigin: true
+      }
+    }
+  }
 })

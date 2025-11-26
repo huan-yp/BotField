@@ -85,19 +85,6 @@ botfield/
     ├── START_GUIDE.md      # 详细使用指南
     └── ARCHITECTURE.md     # 技术架构文档
 ```
-## 开发命令
-
-```powershell
-# 前端开发
-npm run dev:fe          # 启动开发服务器
-npm run build:fe        # 构建生产版本
-
-# 后端服务
-npm run dev:backend     # 启动 WebSocket 服务器
-
-# C++ Bridge
-npm run dev:bridge      # 启动桥接客户端
-```
 
 ## 文档
 

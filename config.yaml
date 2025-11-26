@@ -1,4 +1,4 @@
 total_games: 20
 player_number: 12
 bot_dir: bots
-default_bot: demo 
+default_bot: demo

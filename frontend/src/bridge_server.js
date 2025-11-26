@@ -9,10 +9,10 @@ const path = require('path');
 const fs = require('fs');
 
 // 配置：根据你的系统调整
-const EXE_NAME = 'battlefield.exe'; // Windows
+const EXE_NAME = './backend/build/main.exe'; // Windows
 // const EXE_NAME = './battlefield'; // Mac/Linux
 
-const EXE_PATH = path.join(__dirname, EXE_NAME);
+const EXE_PATH = EXE_NAME;
 const WS_PORT = 3000;
 
 // 1. 启动 WebSocket 服务器

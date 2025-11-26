@@ -73,7 +73,15 @@ string get_response(const char* cmd)
 	char buf_ps[2048];
 	char ps[2048] = {};
 	FILE* ptr;
+
 	strcpy(ps, cmd);  // 如编译不通过的话将strcpy_s改成strcpy
+#ifdef _WIN32
+	for (int i = 0; ps[i] != 0; ++i) {
+		if (ps[i] == '/') {
+			ps[i] = '\\';
+		}
+	}
+#endif
 	if ((ptr = _popen(ps, "r")) != NULL)
 	{
 		while (fgets(buf_ps, 2048, ptr) != NULL)strcat_s(result, buf_ps);
@@ -99,7 +107,7 @@ bool load_config() {
     SimpleYamlParser config;
     
     // 尝试从当前目录加载 config.yaml
-    if (!config.parse("../config.yaml") && !config.parse("config.yaml")) {
+    if (!config.parse("config.yaml") && !config.parse("config.yaml")) {
         cerr << "Error: Cannot load config.yaml" << endl;
         return false;
     }
@@ -111,7 +119,7 @@ bool load_config() {
 
     // 扫描 bot 目录
     vector<string> bot_files;
-    string bot_path = "../" + BOT_DIR;
+    string bot_path = BOT_DIR;
     
     try {
         if (fs::exists(bot_path) && fs::is_directory(bot_path)) {
@@ -140,13 +148,13 @@ bool load_config() {
     for (size_t i = 0; i < bot_files.size() && bots.size() < (size_t)PLAYER_NUMBER; i++) {
         string bot_name = bot_files[i];
         string player_name = bot_name.substr(0, bot_name.find_last_of('.'));
-        string full_path = "../" + BOT_DIR + "/" + bot_name;
+        string full_path = BOT_DIR + "/" + bot_name;
         bots.push_back({full_path, player_name});
     }
 
     // 如果不足 PLAYER_NUMBER 个，用 DEFAULT_BOT 补全
     int current_count = bots.size();
-    string default_bot_path = "../" + BOT_DIR + "/" + DEFAULT_BOT;
+    string default_bot_path = BOT_DIR + "/" + DEFAULT_BOT;
     for (int i = current_count; i < PLAYER_NUMBER; i++) {
         bots.push_back({default_bot_path, "Default" + to_string(i - current_count + 1)});
     }

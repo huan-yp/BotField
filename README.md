@@ -31,7 +31,7 @@ cd client && make && cd ..
 #### 2.2 gcc 编译
 
 ```powershell
-g++ -o ./backend/build/main -O2 -std=c++17 -fopenmp ./backend/src/battlefield.cpp ./backend/src/third_party/jsoncpp/jsoncpp.cpp -Ibackend/src/third_party
+g++ -o ./client/build/main -O2 -std=c++17 -fopenmp ./client/src/battlefield.cpp ./client/src/third_party/jsoncpp/jsoncpp.cpp -Iclient/src/third_party
 ```
 
 ### 3. 填写配置

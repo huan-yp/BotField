@@ -252,7 +252,7 @@ int main()
         for (int i=0; i<3; i++)
         {
             player_initial_cards[i].clear();
-            player_initial_cards[i].insert(cards.begin()+(i-1)*17, cards.begin()+i*17);
+			player_initial_cards[i].insert(cards.begin()+i*17, cards.begin()+(i+1)*17);
         }
 		public_cards.clear();
 		public_cards.insert(cards.begin()+51, cards.begin()+54);
